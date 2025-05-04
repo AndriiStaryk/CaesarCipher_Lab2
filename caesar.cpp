@@ -1,4 +1,4 @@
-#include <string>
+#include "caesar.h"
 #include <omp.h>
 
 const std::string alphabet_upper = "АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ";
@@ -20,22 +20,12 @@ char caesar_shift(char ch, int shift) {
 }
 
 std::string caesar_encrypt(const std::string& text, int shift) {
-    std::string result;
-    result.reserve(text.length());
+    std::string result(text.length(), ' ');
     
-    #pragma omp parallel
-    {
-        std::string local_result;
-        local_result.reserve(text.length() / omp_get_num_threads() + 1);
-        
-        #pragma omp for schedule(dynamic, 1000) nowait
-        for (size_t i = 0; i < text.length(); i++) {
-            local_result += caesar_shift(text[i], shift);
-        }
-        
-        #pragma omp critical
-        result += local_result;
+    #pragma omp parallel for schedule(dynamic, 1000)
+    for (size_t i = 0; i < text.length(); i++) {
+        result[i] = caesar_shift(text[i], shift);
     }
-    
+
     return result;
 }

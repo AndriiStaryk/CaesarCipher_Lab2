@@ -6,11 +6,17 @@ CXXFLAGS = -std=c++17 -fopenmp \
 LDFLAGS = -L/opt/homebrew/opt/llvm/lib \
   -L/opt/homebrew/lib
 
-SRC = main.cpp
+SRC = caesar.cpp main.cpp
+OBJ = $(SRC:.cpp=.o)
 OUT = my_app
 
-all:
-	$(CXX) $(CXXFLAGS) $(SRC) -o $(OUT) $(LDFLAGS)
+all: $(OUT)
+
+$(OUT): $(OBJ)
+	$(CXX) $(CXXFLAGS) $(OBJ) -o $(OUT) $(LDFLAGS)
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OUT)
+	rm -f $(OUT) $(OBJ)
