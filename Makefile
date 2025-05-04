@@ -8,7 +8,7 @@ LDFLAGS = -L/opt/homebrew/opt/llvm/lib \
 
 SRC = caesar.cpp main.cpp
 OBJ = $(SRC:.cpp=.o)
-OUT = my_app
+OUT = encrypt
 
 all: $(OUT)
 
