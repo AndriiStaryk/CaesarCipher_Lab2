@@ -4,6 +4,6 @@
 #include <string>
 
 char caesar_shift(char ch, int shift);
-std::string caesar_encrypt(const std::string& text, int shift);
+std::wstring caesar_encrypt(const std::wstring& text, int shift);
 
 #endif
